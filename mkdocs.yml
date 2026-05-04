@@ -1,0 +1,122 @@
+site_name: Identity Tangle Tree (ITT) to Piecewise Linear (PL) Path
+site_description: Identity Tangle Tree to Piecewise Linear (PL) Path
+site_url: https://itt2plp.joe-starr.com/
+theme:
+    name: material
+    logo: infra/assets/logo.svg
+    favicon: infra/assets/favicon.png
+    palette:
+        - media: "(prefers-color-scheme: light)"
+          accent: deep purple
+          primary: deep purple
+          scheme: default
+          toggle:
+              icon: material/brightness-7
+              name: Switch to dark mode
+
+        # Palette toggle for dark mode
+        - media: "(prefers-color-scheme: dark)"
+          accent: deep purple
+          primary: deep purple
+          scheme: dracula
+          toggle:
+              icon: material/brightness-4
+              name: Switch to light mode
+    features:
+        - navigation.tabs
+        - navigation.tabs.sticky
+        - navigation.sections
+        - navigation.indexes
+        - toc.follow
+        - navigation.top
+        - content.code.copy
+repo_name: joecstarr/pdgl
+repo_url: https://github.com/joecstarr/pdgl
+extra_css:
+    - https://unpkg.com/katex@0/dist/katex.min.css
+    - "infra/css/colors.css"
+    - "infra/css/admonitions.css"
+    - "infra/css/icon.css"
+    - "infra/css/authors.css"
+    - "infra/css/status.css"
+
+extra_javascript:
+    - https://unpkg.com/katex@0/dist/katex.min.js
+    - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+    - "infra/js/extra.js"
+
+watch:
+    - docs
+    - source
+
+nav:
+    - Home: "./README.md"
+    - MADR: content/madr
+    - Tests: content/tests
+    - Code Comments: "code/files.md"
+plugins:
+    - auto-refresh-build-pages:
+          update_message: "The page has been updated. Do you want to reload?"
+          yes_button_text: "Yes"
+          no_button_text: "No"
+          check_interval_seconds: 10
+    - mkdoxy:
+          projects:
+              code: # name of project must be alphanumeric + numbers (without spaces)
+                  src-dirs: ./source/ # path to source code (support multiple paths separated by space) => INPUT
+                  full-doc: True # if you want to generate full documentation
+                  doxy-cfg: # standard doxygen configuration (key: value)
+                      FILE_PATTERNS: "*.cpp *.h *.c *.hpp" # specify file patterns to filter out
+                      EXCLUDE_PATTERNS: "*/test/*" # specify file patterns to filter out
+                      RECURSIVE: True # recursive search in source directories
+                      MARKDOWN_SUPPORT: True
+    - monorepo
+    - search:
+    - autorefs:
+    - bibtex:
+          bib_file: "docs/infra/ref.bib"
+    - authors:
+          authors_file: "infra/.authors.yml"
+    - include_dir_to_nav
+markdown_extensions:
+    - attr_list
+    - footnotes
+    - pymdownx.arithmatex:
+          generic: true
+    - toc:
+          permalink: 
+          separator: "_"
+    - pymdownx.details
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+          options:
+              custom_icons:
+                  - overrides/.icons
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.highlight:
+          use_pygments: true
+          anchor_linenums: true
+          pygments_lang_class: true
+          linenums: true
+          linenums_style: pymdownx-inline
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.blocks.caption
+    - md_in_html
+    - gfm_admonition
+extra:
+    social:
+        - icon: fontawesome/brands/github-alt
+          link: https://github.com/joecstarr/itt_2_plpath_converter
+    status:
+        deprecated: Decision is Suggested
+        suggested: Decision is Suggested
+        in_progress: Decision is in Progress
+        accepted: Accepted Decision
+        happy: This test is on the happy path
+        unhappy: This test is on the unhappy path
