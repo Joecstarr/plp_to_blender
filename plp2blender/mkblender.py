@@ -16,16 +16,22 @@ from .plpath_parsing import PLPath
 def blend(
     path: PLPath,
     handleType: str = 'NURBS',
+    force: int = 8,
     bevelMode: str = 'ROUND',
     bevelDepth: float = 0.09,
     bevelRes: float = 4,
 ) -> None:
     """@@@TODO: ."""
     _clearBlend()
-    curveData = bpy.data.curves.new('Tangle', type='CURVE')
-    curveData.dimensions = '3D'
-    curveData.resolution_u = 4
-    for seg in path.segements:
+
+    for i, seg in enumerate(path.segements):
+        curveData = bpy.data.curves.new(f'Segment {i}', type='CURVE')
+        curveData.dimensions = '3D'
+        curveData.resolution_u = 4
+        curveData.bevel_mode = bevelMode
+        curveData.bevel_depth = bevelDepth
+        curveData.bevel_resolution = bevelRes
+        curveData.use_fill_caps = True
         polyline = curveData.splines.new(handleType)
 
         if seg[-1] == seg[0]:
@@ -34,16 +40,13 @@ def blend(
         else:
             polyline.use_endpoint_u = True
 
-        for pnt in seg:
-            polyline.points[-1].co = (pnt.x, pnt.y, pnt.z, 19)
-            polyline.points.add(1)
+        polyline.points.add(len(seg) - 1)
+        polyline.order_u = force
+        for j, pnt in enumerate(seg):
+            polyline.points[j].co = (pnt.x, pnt.y, pnt.z, 19)
 
-    curveOB = bpy.data.objects.new('Tangle', curveData)
-    curveData.bevel_mode = bevelMode
-    curveData.bevel_depth = bevelDepth
-    curveData.bevel_resolution = bevelRes
-    curveData.use_fill_caps = True
-    bpy.context.scene.collection.objects.link(curveOB)
+        curveOB = bpy.data.objects.new(f'Segment {i}', curveData)
+        bpy.context.scene.collection.objects.link(curveOB)
 
 
 def _clearBlend():
