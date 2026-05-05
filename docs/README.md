@@ -3,10 +3,6 @@ title: Convert Identity Tangle Tree (ITT) to Piecewise Linear (PL) Path
 authors:
   - joe_starr
 ---
-<link
-rel="stylesheet"
-href="https://unpkg.com/devicons@2.0.1/dist/devicons.css"
-/>
 
 [![DOI - 10.5281/zenodo.19955234](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19955234-2ea44f?logo=DOI)](https://doi.org/10.5281/zenodo.19955234)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
