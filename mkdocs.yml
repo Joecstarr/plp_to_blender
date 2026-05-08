@@ -3,7 +3,7 @@ site_description: Example code for loading a PL path into blender and storing th
 site_url: https://plp2blender.joe-starr.com/
 theme:
     name: material
-    logo: infra/assets/logo.svg
+    logo: infra/assets/logo.png
     favicon: infra/assets/favicon.png
     palette:
         - media: "(prefers-color-scheme: light)"
@@ -30,7 +30,7 @@ theme:
         - toc.follow
         - navigation.top
         - content.code.copy
-repo_name: joecstarr/pdgl
+repo_name: joecstarr/plp_to_blender
 repo_url: https://github.com/joecstarr/plp_to_blender
 extra_css:
     - https://unpkg.com/katex@0/dist/katex.min.css
@@ -50,11 +50,19 @@ watch:
     - plp2blender
 
 nav:
-    - Home: "./README.md"
-    - MADR: content/madr
-    - Use Cases: content/usecase
-    - Tests: content/tests
-    - Code Comments: "content/code"
+    - Home: README.md
+    - Architectural Decision Records:
+          - content/madr/index.md
+          - content/madr
+    - Use Cases:
+          - content/usecase/index.md
+          - content/usecase
+    - Tests:
+          - content/tests/index.md
+          - content/tests
+    - Code Comments:
+          - content/code/index.md
+          - content/code
 plugins:
     - auto-refresh-build-pages:
           update_message: "The page has been updated. Do you want to reload?"
@@ -67,7 +75,8 @@ plugins:
           bib_file: "docs/infra/ref.bib"
     - authors:
           authors_file: "infra/.authors.yml"
-    - include_dir_to_nav
+    - include_dir_to_nav:
+          file_pattern: '\d{4}.*\.md$'
     - mkdocstrings:
           handlers:
               python:
