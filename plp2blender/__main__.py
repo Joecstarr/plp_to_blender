@@ -1,37 +1,47 @@
-"""@@@TODO: ."""
+"""Main calling routines with typer interfaces."""
 
 from pathlib import Path
 
 import typer
 
-from plp2blender.mkblender import blend, blendBlob, saveBlendFile
+from .blender_handler.build import blend
+from .blender_handler.out_blob import blendBlob
+from .blender_handler.out_file import saveBlendFile
+from .db_handler.db import writeDB
+from .path_parsing.plpath import PLPath
 
-from .plpath_parsing import PLPath
 
+def convert(pathStr: str = '', dbFile: str = '', wptt: str = '', outputFile: str = ''):
+    """Load into blender an input PL path.
 
-def convert(path_str: str = '', path_file: str = ''):
-    """@@@TODO: ."""
+    Args:
+        pathStr: The PL as a raw string.
+        dbFile: A path to an SQLite database for storage.
+        wptt: The WPTT for the input PL path.
+        outputFile: A path to a blender file to output to.
 
-    if path_file:
-        with open(path_file, 'r') as fr:
-            path_str = fr.read()
-
-    if not path_str:
+    Raises:
+        ValueError: A PL path is not loaded.
+    """
+    if not pathStr:
         while True:
             try:
-                path_str = path_str + input() + '\n'
+                pathStr = pathStr + input() + '\n'
             except EOFError:
-                # no more information
                 break
 
-    if not path_str:
-        raise ValueError('A very specific bad thing happened.')
+    if not pathStr:
+        raise ValueError('There is no PL path to process.')
 
-    path = PLPath(path_str)
+    path = PLPath(pathStr)
     blend(path)
-    blob = blendBlob()
-    saveBlendFile(Path('out.blend'))
-    ...
+
+    if outputFile:
+        saveBlendFile(Path(outputFile))
+
+    if wptt and dbFile:
+        blob = blendBlob()
+        writeDB(dbFile, wptt, pathStr, blob)
 
 
 if __name__ == '__main__':

@@ -1,36 +1,30 @@
 ---
-title: Convert Identity Tangle Tree (ITT) to Piecewise Linear (PL) Path
+title: Load a Piecewise Linear (PL) Path Tangle Into Blender and Store for Test
 authors:
   - joe_starr
 ---
 
-[![DOI - 10.5281/zenodo.19955234](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19955234-2ea44f?logo=DOI)](https://doi.org/10.5281/zenodo.19955234)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 [![White Logo image](https://brainmade.org/white-logo.svg)](https://brainmade.org)
-
-![./infra/assets/logo.svg](./infra/assets/logo.svg){width=40%}
-
-/// caption
-
-///
 
 ## Note to Reader
 
 ### What Am I?
 
-The _Identity Tangle Tree (ITT) to Piecewise Linear (PL) Path_ is a runnable wrapper for the
-[Tanglenomicon Core Libraries](https://github.com/Uiowa-Applied-Topology/tanglenomicon_core_libraries).
-Specifically, the ITT runnable takes command line input in the form of an ITT and output a PL path
-realizing that ITT in $\R^3$.
+The code in this repository serves as an example for loading a PL path tangle into blender. The
+repository also gives an example for storing blender data (along with a PL path and WPTT) into a
+database. Storing the data in a database allows for construction of standardized and understandable
+test datasets.
 
 ### About the Documentation
 
-The following document describes the "rules" and expectation for the ITT to PL Path tool. The
+The following document describes the "rules" and expectation for the tool. The
 ["Code Comments"](./lib/files/) page contains the technical context descriptions found in the source
-files. The ["Decisions"](./madr/) page contains a collection of
+files. The ["Use Cases"](./use_cases/) page contains a collection of use cases and a use case
+diagram for the tool. The ["Decisions"](./madr/) page contains a collection of
 [architectural decision records](https://adr.github.io/madr/) [@Kopp2018] giving context on why this
-is the way it is.
+tool is the way it is.
 
 ### Issues
 
@@ -65,7 +59,6 @@ The toolchain shall be kept under Git versioning. Development shall take place o
 `main` on GitHub as a source of truth. GitHub pull requests shall serve as the arbiter for inclusion
 on main with the following quality gates:
 
-- Compiling of source code.
 - Running and passing the unit test suite.
 - Running and passing linting and style enforcers.
 - Successful generation of documentation.
@@ -87,7 +80,6 @@ Files and directories shall be lower case, where capital is not required by a to
 ```text
 
  .
-├──  .git
 ├──  .github
 │   ├──  ISSUE_TEMPLATE
 │   │   ├──  1-spelling.yml
@@ -102,6 +94,8 @@ Files and directories shall be lower case, where capital is not required by a to
 │   └──  pull_request_template.md
 ├──  docs
 │   ├──  assets
+│   ├──  use_cases 
+│   │   └──  <>.md
 │   ├──  madr
 │   │   └──  <>.md
 │   ├──  .authors.yml
@@ -114,39 +108,25 @@ Files and directories shall be lower case, where capital is not required by a to
 │   ├── 󰂺 README.md
 │   ├──  ref.bib
 │   └──  status.css
-├──  libraries
-│   ├──  argparse
-│   ├──  cmock
-│   ├──  core_lib
-│   ├──  unity
-│   ├──  CMakeLists.txt
-│   └──  FindLizard.cmake
 ├──  misc
 ├──  source
 │   ├──  <unit>
-│   │   ├──  <>.c
-│   │   ├──  <>.h
 │   │   ├──  test_<>.py
-│   │   └──  CMakeLists.txt
-│   ├──  CMakeLists.txt
-│   ├──  test_<>.py
-│   └──  main.c
+│   │   └──  <>.py
+│   ├──  __init__.py
+│   └──  __main__.py
 ├──  .editorconfig
 ├── 󰊢 .gitignore
 ├── 󰊢 .gitmodules
 ├── 󰛢 .pre-commit-config.yaml
 ├──  .rumdl.toml
-├── 󱁻 .uncrustify.cfg
-├──  .valgrind.supp
 ├── 󰡯 CITATION
-├──  CMakeLists.txt
-├──  cppcheck.supp
 ├──  flake.lock
 ├──  flake.nix
 ├──  Justfile
 ├──  LICENSE
 ├──  mkdocs.yml
-└──  requirements.txt
+└──  .rumdl.toml
 
 ```
 
@@ -157,7 +137,7 @@ Files and directories shall be lower case, where capital is not required by a to
 
 ### Define a Unit
 
-A unit in this project shall be defined as a header file.
+A unit in this project shall be defined as a python module file.
 
 ### Quality
 
@@ -173,38 +153,16 @@ No unit testing is expected.
 Integration tests are expected to be carried out for the tool. Test specifications can be found in
 the [test directory](./test/).
 
-#### Requirements
+### Requirements
+
+#### Functional Requirements
+
+##### Use Cases  
 
 ##### Architectural Decisions
 
 Architectural decisions [MADR](<https://github.com/adr/madr>) [@Kopp2018] serve as the primary
 documentation for the architecture of the tool.
-
-##### Program Flow
-
-```mermaid
-stateDiagram-v2
-    state "Parse arguments" as pi 
-    state "Read from standard in" as rstdin 
-    state "Write to standard out" as wstdout 
-    state "Deterimine WPTT buffer size" as dwb
-    state "Parse input as WPTT" as pw 
-    state "Compute PL buffer size" as cplbs 
-    state "Compute PL path" as cpp 
-    state "Determine string buffer size" as dsbs 
-    state "Encode PL path as string" as epp 
-    [*] --> pi
-    pi --> rstdin
-    rstdin --> dwb
-    dwb --> pw
-    pw --> cplbs
-    cplbs --> cpp
-    cpp --> dsbs
-    dsbs --> epp
-    epp --> wstdout
-    wstdout --> [*]
-
-```
 
 #### Nonfunctional Requirements
 

@@ -29,6 +29,7 @@
           uv
           wget
           rumdl
+          sqlit-tui
         ];
 
         shellHook = ''

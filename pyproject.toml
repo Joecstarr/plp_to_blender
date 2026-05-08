@@ -1,5 +1,5 @@
 [project]
-name = ""
+name = "plp2blender"
 version = "0.1.0"
 description = "Add your description here"
 readme = "docs/README.md"
@@ -8,6 +8,7 @@ dependencies = [
   "bpy>=5.1.1",
   "griffe-typingdoc>=0.3.1",
   "more_itertools==8.10",
+  "peewee>=4.0.5",
   "typer>=0.25.1",
 ]
 
@@ -17,6 +18,7 @@ plp2blender = "plp2blender:main"
 [dependency-groups]
 dev = [
   "cairosvg>=2.9.0",
+  "fake-bpy-module>=20260501",
   "markdown-gfm-admonition @ git+https://github.com/Joecstarr/markdown-gfm-admonition",
   "markdown-include-variants>=0.0.8",
   "mdx-include>=1.4.2",
@@ -29,6 +31,7 @@ dev = [
   "mkdocs-material>=9.7.6",
   "mkdocs-monorepo-plugin>=1.1.2",
   "mkdocs-redirects>=1.2.3",
+  "mkdocstrings[python]>=1.0.4",
   "mkdoxy>=1.2.8",
   "parametrize-from-file>=0.20.0",
   "pymdown-extensions>=10.21.2",
@@ -36,6 +39,7 @@ dev = [
   "pytest-html>=4.2.0",
   "pytest-reportlog>=1.0.0",
   "reloadserver>=1.0.0",
+  "ty>=0.0.34",
 ]
 
 [tool.ruff]

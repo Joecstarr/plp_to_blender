@@ -42,9 +42,9 @@ live: bootstrap
 # Run tombi 
 do-tombi:
     tombi format plp2blender 
-    tombi format misc
     tombi format docs 
     tombi format ./pyproject.toml 
+    tombi format ./.rumdl.toml 
     
 
 ##################################################################################################

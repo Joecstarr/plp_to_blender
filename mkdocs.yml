@@ -1,6 +1,6 @@
-site_name: Identity Tangle Tree (ITT) to Piecewise Linear (PL) Path
-site_description: Identity Tangle Tree to Piecewise Linear (PL) Path
-site_url: https://itt2plp.joe-starr.com/
+site_name: Example for loading a PL path into blender
+site_description: Example code for loading a PL path into blender and storing those results
+site_url: https://plp2blender.joe-starr.com/
 theme:
     name: material
     logo: infra/assets/logo.svg
@@ -31,7 +31,7 @@ theme:
         - navigation.top
         - content.code.copy
 repo_name: joecstarr/pdgl
-repo_url: https://github.com/joecstarr/pdgl
+repo_url: https://github.com/joecstarr/plp_to_blender
 extra_css:
     - https://unpkg.com/katex@0/dist/katex.min.css
     - "infra/css/colors.css"
@@ -47,30 +47,20 @@ extra_javascript:
 
 watch:
     - docs
-    - source
+    - plp2blender
 
 nav:
     - Home: "./README.md"
     - MADR: content/madr
+    - Use Cases: content/usecase
     - Tests: content/tests
-    - Code Comments: "code/files.md"
+    - Code Comments: "content/code"
 plugins:
     - auto-refresh-build-pages:
           update_message: "The page has been updated. Do you want to reload?"
           yes_button_text: "Yes"
           no_button_text: "No"
           check_interval_seconds: 10
-    - mkdoxy:
-          projects:
-              code: # name of project must be alphanumeric + numbers (without spaces)
-                  src-dirs: ./source/ # path to source code (support multiple paths separated by space) => INPUT
-                  full-doc: True # if you want to generate full documentation
-                  doxy-cfg: # standard doxygen configuration (key: value)
-                      FILE_PATTERNS: "*.cpp *.h *.c *.hpp" # specify file patterns to filter out
-                      EXCLUDE_PATTERNS: "*/test/*" # specify file patterns to filter out
-                      RECURSIVE: True # recursive search in source directories
-                      MARKDOWN_SUPPORT: True
-    - monorepo
     - search:
     - autorefs:
     - bibtex:
@@ -78,6 +68,28 @@ plugins:
     - authors:
           authors_file: "infra/.authors.yml"
     - include_dir_to_nav
+    - mkdocstrings:
+          handlers:
+              python:
+                  options:
+                      extensions:
+                          - griffe_typingdoc
+                      show_root_heading: true
+                      show_if_no_docstring: true
+                      preload_modules:
+                          - httpx
+                          - starlette
+                      inherited_members: true
+                      members_order: source
+                      separate_signature: true
+                      unwrap_annotated: true
+                      filters:
+                          - "!^_"
+                      merge_init_into_class: true
+                      docstring_section_style: spacy
+                      signature_crossrefs: true
+                      show_symbol_type_heading: true
+                      show_symbol_type_toc: true
 markdown_extensions:
     - attr_list
     - footnotes
@@ -112,7 +124,7 @@ markdown_extensions:
 extra:
     social:
         - icon: fontawesome/brands/github-alt
-          link: https://github.com/joecstarr/itt_2_plpath_converter
+          link: https://github.com/joecstarr/plp_to_blender
     status:
         deprecated: Decision is Suggested
         suggested: Decision is Suggested
